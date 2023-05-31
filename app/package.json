@@ -1,13 +1,14 @@
 {
-  "name": "angular-electron",
-  "description": "Angular Electron sample",
+  "name": "obake-terminal",
+  "description": "Obake Workspace Series - Terminal",
   "author": {
-    "name": "Maxime GRIS",
-    "email": "maxime.gris@gmail.com"
+    "name": "pi",
+    "email": "eito01178@gmail.com"
   },
-  "version": "12.0.1",
+  "version": "0.0.0",
   "main": "main.js",
   "private": true,
   "dependencies": {
+    "node-pty": "^0.10.1"
   }
 }

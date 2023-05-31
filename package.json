@@ -1,11 +1,11 @@
 {
-  "name": "angular-electron",
-  "version": "12.0.1",
-  "description": "Angular 15 with Electron 24 (Typescript + SASS + Hot Reload)",
+  "name": "obake-terminal",
+  "version": "0.0.0",
+  "description": "Obake Workspace Series - Terminal",
   "homepage": "https://github.com/maximegris/angular-electron",
   "author": {
-    "name": "Maxime GRIS",
-    "email": "maxime.gris@gmail.com"
+    "name": "pi",
+    "email": "eito01178@gmail.com"
   },
   "keywords": [
     "angular",
