@@ -1,4 +1,4 @@
-import { app, BrowserWindow } from 'electron';
+import { app, BrowserWindow, screen } from 'electron';
 import * as path from 'path';
 import * as fs from 'fs';
 import { loadData, saveData } from './utils/save-data';
@@ -13,12 +13,20 @@ function createWindow(): BrowserWindow {
     'userData.restore-window-state'
   );
 
+  const screenWidth = screen.getPrimaryDisplay().size.width;
+  const screenHeight = screen.getPrimaryDisplay().size.height;
+
+  const windowX = x > screenWidth || x < 0 ? 0 : x;
+  const windowY = y > screenHeight || y < 0 ? 0 : y;
+  const windowWidth = width > screenWidth ? screenWidth : width;
+  const windowHeight = height > screenHeight ? screenHeight : height;
+
   // Create the browser window.
   window = new BrowserWindow({
-    x: x,
-    y: y,
-    width: width,
-    height: height,
+    x: windowX,
+    y: windowY,
+    width: windowWidth,
+    height: windowHeight,
     fullscreen: isFullScreen,
     fullscreenable: true,
     webPreferences: {
@@ -57,13 +65,15 @@ function createWindow(): BrowserWindow {
     if (!window) {
       return;
     }
+    const position = window.getPosition();
+    const size = window.getSize();
     saveData({
       key: 'userData.restore-window-state',
       data: {
-        x: window.getPosition()[0],
-        y: window.getPosition()[1],
-        width: window.getSize()[0],
-        height: window.getSize()[1],
+        x: position[0],
+        y: position[1],
+        width: size[0],
+        height: size[1],
         isFullScreen: window.isFullScreen(),
       },
     });
