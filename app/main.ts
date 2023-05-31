@@ -77,5 +77,5 @@ try {
   });
 } catch (e) {
   // Catch Error
-  // throw e;
+  throw e;
 }
