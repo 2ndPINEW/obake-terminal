@@ -5,8 +5,8 @@ import {
   CreatePainChunk,
   chunkToString,
   stringToChunk,
-} from '../../shared/chunk';
-import { SHELL_MANAGER_CHANNEL } from '../../shared/constants/channel';
+} from '../shared/chunk';
+import { SHELL_MANAGER_CHANNEL } from '../shared/constants/channel';
 import { ShellService } from './shell-service';
 import { IpcMainEvent, ipcMain } from 'electron';
 import { Logger } from '../utils/logger';

@@ -3,7 +3,7 @@ import { IPty, spawn } from 'node-pty';
 import { BrowserWindow, ipcMain } from 'electron';
 import { Subject, Subscription, filter, map } from 'rxjs';
 import { IpcMainEvent } from 'electron';
-import { chunkToString, stringToChunk } from '../../shared/chunk';
+import { chunkToString, stringToChunk } from '../shared/chunk';
 
 const shell = os.platform() === 'win32' ? 'powershell.exe' : 'zsh';
 
