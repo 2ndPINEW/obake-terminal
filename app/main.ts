@@ -28,6 +28,8 @@ function createWindow(): BrowserWindow {
 
     require('electron-reloader')(module);
     window.loadURL('http://localhost:4200');
+
+    window.webContents.openDevTools();
   } else {
     // Path when running electron executable
     let pathIndex = './index.html';
