@@ -2,6 +2,7 @@ import { app, BrowserWindow } from 'electron';
 import * as path from 'path';
 import * as fs from 'fs';
 import { loadData, saveData } from './utils/save-data';
+import { ShellManageService } from './services/shell-manage-service';
 
 let window: BrowserWindow | null = null;
 const args = process.argv.slice(1),
@@ -27,6 +28,8 @@ function createWindow(): BrowserWindow {
     },
   });
 
+  new ShellManageService(window);
+
   if (serve) {
     const debug = require('electron-debug');
     debug();
@@ -34,7 +37,9 @@ function createWindow(): BrowserWindow {
     require('electron-reloader')(module);
     window.loadURL('http://localhost:4200');
 
-    window.webContents.openDevTools();
+    setTimeout(() => {
+      window?.webContents.openDevTools();
+    }, 100);
   } else {
     // Path when running electron executable
     let pathIndex = './index.html';
