@@ -58,10 +58,14 @@ export const saveData = (data: DataBlock): void => {
 export const loadData = <T extends DataBlock['key']>(
   key: T
 ): Extract<DataBlock, { key: T }>['data'] => {
-  const dataPath = getDataPath(key);
-  if (!existsSync(dataPath)) {
+  try {
+    const dataPath = getDataPath(key);
+    if (!existsSync(dataPath)) {
+      return DefaultValue[key] as any;
+    }
+    const data = readFileSync(dataPath, 'utf8');
+    return JSON.parse(data);
+  } catch {
     return DefaultValue[key] as any;
   }
-  const data = readFileSync(dataPath, 'utf8');
-  return JSON.parse(data);
 };
