@@ -1,20 +1,25 @@
-import { app, BrowserWindow, screen } from 'electron';
+import { app, BrowserWindow } from 'electron';
 import * as path from 'path';
 import * as fs from 'fs';
+import { loadData, saveData } from './utils/save-data';
 
 let window: BrowserWindow | null = null;
 const args = process.argv.slice(1),
   serve = args.some((val) => val === '--serve');
 
 function createWindow(): BrowserWindow {
-  const size = screen.getPrimaryDisplay().workAreaSize;
+  const { x, y, width, height, isFullScreen } = loadData(
+    'userData.restore-window-state'
+  );
 
   // Create the browser window.
   window = new BrowserWindow({
-    x: 0,
-    y: 0,
-    width: size.width,
-    height: size.height,
+    x: x,
+    y: y,
+    width: width,
+    height: height,
+    fullscreen: isFullScreen,
+    fullscreenable: true,
     webPreferences: {
       nodeIntegration: true,
       allowRunningInsecureContent: serve,
@@ -43,6 +48,22 @@ function createWindow(): BrowserWindow {
     window.loadURL(url.href);
   }
 
+  window.on('close', () => {
+    if (!window) {
+      return;
+    }
+    saveData({
+      key: 'userData.restore-window-state',
+      data: {
+        x: window.getPosition()[0],
+        y: window.getPosition()[1],
+        width: window.getSize()[0],
+        height: window.getSize()[1],
+        isFullScreen: window.isFullScreen(),
+      },
+    });
+  });
+
   // Emitted when the window is closed.
   window.on('closed', () => {
     // Dereference the window object, usually you would store window
@@ -54,30 +75,25 @@ function createWindow(): BrowserWindow {
   return window;
 }
 
-try {
-  // This method will be called when Electron has finished
-  // initialization and is ready to create browser windows.
-  // Some APIs can only be used after this event occurs.
-  // Added 400 ms to fix the black background issue while using transparent window. More detais at https://github.com/electron/electron/issues/15947
-  app.on('ready', () => setTimeout(createWindow, 400));
+// This method will be called when Electron has finished
+// initialization and is ready to create browser windows.
+// Some APIs can only be used after this event occurs.
+// Added 400 ms to fix the black background issue while using transparent window. More detais at https://github.com/electron/electron/issues/15947
+app.on('ready', () => setTimeout(createWindow, 400));
 
-  // Quit when all windows are closed.
-  app.on('window-all-closed', () => {
-    // On OS X it is common for applications and their menu bar
-    // to stay active until the user quits explicitly with Cmd + Q
-    if (process.platform !== 'darwin') {
-      app.quit();
-    }
-  });
+// Quit when all windows are closed.
+app.on('window-all-closed', () => {
+  // On OS X it is common for applications and their menu bar
+  // to stay active until the user quits explicitly with Cmd + Q
+  if (process.platform !== 'darwin') {
+    app.quit();
+  }
+});
 
-  app.on('activate', () => {
-    // On OS X it's common to re-create a window in the app when the
-    // dock icon is clicked and there are no other windows open.
-    if (window === null) {
-      createWindow();
-    }
-  });
-} catch (e) {
-  // Catch Error
-  throw e;
-}
+app.on('activate', () => {
+  // On OS X it's common to re-create a window in the app when the
+  // dock icon is clicked and there are no other windows open.
+  if (window === null) {
+    createWindow();
+  }
+});
