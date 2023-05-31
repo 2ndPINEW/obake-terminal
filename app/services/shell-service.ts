@@ -83,6 +83,7 @@ export class ShellService {
     this.subscription.add(
       this.ptyProcessExit$.subscribe((exitCode) => {
         this.sendToPain(`\r\nPain exited with code ${exitCode}`);
+        this.beforeDestroy();
       })
     );
 
