@@ -11,7 +11,9 @@
     "!package-lock.json",
     {
       "from": "../dist",
-      "filter": ["**/*"]
+      "filter": [
+        "**/*"
+      ]
     }
   ],
   "win": {
@@ -21,7 +23,7 @@
     ]
   },
   "portable": {
-    "splashImage": "dist/assets/icons/electron.bmp"
+    "splashImage": "dist/assets/icons/favicon.512x512.png"
   },
   "mac": {
     "icon": "dist/assets/icons",
