@@ -4,7 +4,9 @@
 @use './styles/reset.css';
 @use '../node_modules/xterm/css/xterm.css';
 
-* {
+*,
+*::before,
+*::after {
   background-color: var(--color-background);
 }
 

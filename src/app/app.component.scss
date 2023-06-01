@@ -1,5 +1,7 @@
 :host {
-  display: block;
+  display: grid;
   height: 100vh;
   height: 100dvh;
+
+  grid-template-rows: 1fr 40px;
 }
