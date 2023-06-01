@@ -10,13 +10,20 @@ import { TranslateHttpLoader } from '@ngx-translate/http-loader';
 import { AppComponent } from './app.component';
 import { PainComponent } from './components/pain/pain.component';
 import { FooterComponent } from './components/footer/footer.component';
+import { WeatherAnimationComponent } from './components/weather-animation/weather-animation.component';
+import { NgParticlesModule } from 'ng-particles';
 
 // AoT requires an exported function for factories
 const httpLoaderFactory = (http: HttpClient): TranslateHttpLoader =>
   new TranslateHttpLoader(http, './assets/i18n/', '.json');
 
 @NgModule({
-  declarations: [AppComponent, PainComponent, FooterComponent],
+  declarations: [
+    AppComponent,
+    PainComponent,
+    FooterComponent,
+    WeatherAnimationComponent,
+  ],
   imports: [
     BrowserModule,
     FormsModule,
@@ -28,6 +35,7 @@ const httpLoaderFactory = (http: HttpClient): TranslateHttpLoader =>
         deps: [HttpClient],
       },
     }),
+    NgParticlesModule,
   ],
   providers: [],
   bootstrap: [AppComponent],

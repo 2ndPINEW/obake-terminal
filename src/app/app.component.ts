@@ -4,7 +4,6 @@ import { TranslateService } from '@ngx-translate/core';
 import { APP_CONFIG } from '../environments/environment';
 import { SHELL_MANAGER_CHANNEL } from '../../app/shared/constants/channel';
 import { timer } from 'rxjs';
-import { ConfettiService } from './services/omotenashi/confetti.service';
 
 @Component({
   selector: 'app-root',
