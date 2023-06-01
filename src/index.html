@@ -11,7 +11,27 @@
 </head>
 
 <body>
-  <app-root>Loading...</app-root>
+  <!-- 真っ先に表示したいからインラインで表示 -->
+  <div class="app-initialize-remove" style="
+    height: 100vh;
+    height: 100dvh;
+    width: 100vw;
+    width: 100dvw;
+    z-index: 9999;
+    background-color: black;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    opacity: 1;
+    transition: opacity 0.5s ease-in-out;
+  ">
+    <img src="assets/icons/favicon.512x512.png" style="
+      max-width: 512px;
+      width: 50%;
+      aspect-ratio: 1/1;
+    ">
+  </div>
+  <app-root></app-root>
 </body>
 
 </html>

@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { AfterViewInit, Component } from '@angular/core';
 import { ElectronService } from './services/electron/electron.service';
 import { TranslateService } from '@ngx-translate/core';
 import { APP_CONFIG } from '../environments/environment';
@@ -9,7 +9,7 @@ import { SHELL_MANAGER_CHANNEL } from '../../app/shared/constants/channel';
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.scss'],
 })
-export class AppComponent {
+export class AppComponent implements AfterViewInit {
   constructor(
     private electronService: ElectronService,
     private translate: TranslateService
@@ -34,5 +34,16 @@ export class AppComponent {
     } else {
       console.log('Run in browser');
     }
+  }
+
+  ngAfterViewInit() {
+    // 初期化後にスプラッシュ画面を削除
+    const element = document.querySelector(
+      '.app-initialize-remove'
+    ) as HTMLElement;
+    element.style.opacity = '0';
+    setTimeout(() => {
+      element.remove();
+    }, 500);
   }
 }
