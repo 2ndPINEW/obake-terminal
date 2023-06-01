@@ -3,6 +3,8 @@ import { ElectronService } from './services/electron/electron.service';
 import { TranslateService } from '@ngx-translate/core';
 import { APP_CONFIG } from '../environments/environment';
 import { SHELL_MANAGER_CHANNEL } from '../../app/shared/constants/channel';
+import { timer } from 'rxjs';
+import { ConfettiService } from './services/omotenashi/confetti.service';
 
 @Component({
   selector: 'app-root',
@@ -41,9 +43,10 @@ export class AppComponent implements AfterViewInit {
     const element = document.querySelector(
       '.app-initialize-remove'
     ) as HTMLElement;
+
     element.style.opacity = '0';
-    setTimeout(() => {
+    timer(500).subscribe(() => {
       element.remove();
-    }, 500);
+    });
   }
 }
