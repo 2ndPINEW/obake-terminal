@@ -3,6 +3,7 @@ import * as path from 'path';
 import * as fs from 'fs';
 import { loadData, saveData } from './utils/save-data';
 import { ShellManageService } from './services/shell-manage-service';
+import { Logger } from './utils/logger';
 
 let window: BrowserWindow | null = null;
 const args = process.argv.slice(1),
@@ -21,12 +22,17 @@ function createWindow(): BrowserWindow {
   const windowWidth = width > screenWidth ? screenWidth : width;
   const windowHeight = height > screenHeight ? screenHeight : height;
 
+  Logger.info('windowX', windowX);
+  Logger.info('windowY', windowY);
+  Logger.info('windowWidth', windowWidth);
+  Logger.info('windowHeight', windowHeight);
+
   // Create the browser window.
   window = new BrowserWindow({
-    x: windowX,
-    y: windowY,
-    width: windowWidth,
-    height: windowHeight,
+    x: 0,
+    y: 0,
+    width: 1280,
+    height: 720,
     fullscreen: isFullScreen,
     fullscreenable: true,
     webPreferences: {

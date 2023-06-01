@@ -1,12 +1,29 @@
 {
-  "PAGES": {
-      "HOME": {
-          "TITLE": "App works !",
-          "GO_TO_DETAIL": "Go to Detail"
+  "settings": {
+    "title": "設定",
+    "sections": {
+      "workspace": {
+        "title": "ワークスペース",
+        "fields": {
+          "repoBase": {
+            "label": "リポジトリの保存先",
+            "description": "リポジトリの保存先を指定します。"
+          },
+          "configBase": {
+            "label": "設定ファイルの保存先",
+            "description": "*.workspace.json の保存先を指定します。"
+          }
+        }
       },
-      "DETAIL": {
-        "TITLE": "Detail page !",
-        "BACK_TO_HOME": "Back to Home"
+      "api": {
+        "title": "API",
+        "fields": {
+          "port": {
+            "label": "ポート番号",
+            "description": "API サーバーのポート番号を指定します。"
+          }
+        }
+      }
     }
   }
 }

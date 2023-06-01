@@ -19,6 +19,8 @@ type DataBlock =
       data: {
         isDarkMode: boolean;
         apiPort: number;
+        repositoryBasePath: string;
+        workspaceConfigBasePath: string;
       };
     };
 
@@ -35,6 +37,8 @@ const DefaultValue: {
   'configData.app-config': {
     isDarkMode: true,
     apiPort: 9435,
+    repositoryBasePath: '~/dev',
+    workspaceConfigBasePath: '~/workspaces',
   },
 };
 

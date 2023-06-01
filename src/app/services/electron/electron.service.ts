@@ -2,22 +2,34 @@ import { Injectable } from '@angular/core';
 
 // If you import a module but never use any of the imported values other than as TypeScript types,
 // the resulting javascript file will look as if you never imported the module at all.
-import { ipcRenderer, webFrame } from 'electron';
+import { IpcRendererEvent, ipcRenderer, webFrame } from 'electron';
 import * as childProcess from 'child_process';
 import * as fs from 'fs';
+import {
+  Chunk,
+  chunkToString,
+  stringToChunk,
+} from '../../../../app/shared/chunk';
+import { Observable } from 'rxjs';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class ElectronService {
-  ipcRenderer!: typeof ipcRenderer;
-  webFrame!: typeof webFrame;
-  childProcess!: typeof childProcess;
-  fs!: typeof fs;
+  public homeDir!: string;
+  public env!: { [key: string]: string };
+
+  private ipcRenderer!: typeof ipcRenderer;
+  private webFrame!: typeof webFrame;
+  private childProcess!: typeof childProcess;
+  private fs!: typeof fs;
 
   constructor() {
     // Conditional imports
     if (this.isElectron) {
+      this.homeDir = window.require('os').homedir();
+      this.env = window.process.env;
+
       this.ipcRenderer = window.require('electron').ipcRenderer;
       this.webFrame = window.require('electron').webFrame;
 
@@ -36,6 +48,8 @@ export class ElectronService {
         console.log(`stdout:\n${stdout}`);
       });
 
+      console.log('ElectronServiceInit');
+
       // Notes :
       // * A NodeJS's dependency imported with 'window.require' MUST BE present in `dependencies` of both `app/package.json`
       // and `package.json (root folder)` in order to make it work here in Electron's Renderer process (src folder)
@@ -52,5 +66,24 @@ export class ElectronService {
 
   get isElectron(): boolean {
     return !!(window && window.process && window.process.type);
+  }
+
+  public send(channel: string, chunk: Chunk): void {
+    if (!this.isElectron) {
+      return;
+    }
+    const data = chunkToString(chunk);
+    this.ipcRenderer.send(channel, data);
+  }
+
+  public on$(channel: string): Observable<Chunk> {
+    return new Observable((observer) => {
+      if (!this.isElectron) {
+        return;
+      }
+      this.ipcRenderer.on(channel, (event: IpcRendererEvent, data: string) => {
+        observer.next(stringToChunk(data));
+      });
+    });
   }
 }

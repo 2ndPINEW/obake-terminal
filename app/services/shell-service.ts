@@ -94,12 +94,6 @@ export class ShellService {
     );
 
     this.subscription.add(
-      this.ptyProcessData$.subscribe((data) => {
-        this.sendToPain(data);
-      })
-    );
-
-    this.subscription.add(
       this.ipcMainResizeEvent$.subscribe(({ cols, rows }) => {
         this.resize(cols, rows);
       })

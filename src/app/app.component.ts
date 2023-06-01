@@ -3,7 +3,6 @@ import { ElectronService } from './services/electron/electron.service';
 import { TranslateService } from '@ngx-translate/core';
 import { APP_CONFIG } from '../environments/environment';
 import { SHELL_MANAGER_CHANNEL } from '../../app/shared/constants/channel';
-import { chunkToString } from '../../app/shared/chunk';
 
 @Component({
   selector: 'app-root',
@@ -19,25 +18,19 @@ export class AppComponent {
     console.log('APP_CONFIG', APP_CONFIG);
 
     if (electronService.isElectron) {
-      console.log(process.env);
       console.log('Run in electron');
-      console.log('Electron ipcRenderer', this.electronService.ipcRenderer);
-      console.log('NodeJS childProcess', this.electronService.childProcess);
 
-      this.electronService.ipcRenderer.on('test', (event, data) => {
-        console.log(data);
+      this.electronService.on$(SHELL_MANAGER_CHANNEL).subscribe((chunk) => {
+        console.log(chunk);
       });
-      this.electronService.ipcRenderer.send(
-        SHELL_MANAGER_CHANNEL,
-        chunkToString({
-          createPain: {
-            id: 'test',
-            size: { cols: 80, rows: 40 },
-            cwd: '/',
-          },
-        })
-      );
-      console.log('chunk');
+
+      this.electronService.send(SHELL_MANAGER_CHANNEL, {
+        createPain: {
+          id: 'test',
+          size: { cols: 80, rows: 40 },
+          cwd: '/',
+        },
+      });
     } else {
       console.log('Run in browser');
     }
