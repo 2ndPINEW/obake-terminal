@@ -1,0 +1,27 @@
+:host {
+  display: flex;
+  justify-content: center;
+
+  .tabicon {
+    background-color: var(--color-tab-background);
+    color: var(--color-tab-text);
+    border-radius: 1000px;
+    display: flex;
+    align-items: center;
+    font-size: 15px;
+    height: 19px;
+    padding: 0 8px;
+    margin: 0 2px;
+    cursor: pointer;
+
+    .icon {
+      width: 10px;
+      height: 10px;
+      border-radius: 50%;
+    }
+
+    .label {
+      padding-left: 6px;
+    }
+  }
+}

@@ -81,9 +81,13 @@ export class ElectronService {
       if (!this.isElectron) {
         return;
       }
-      this.ipcRenderer.on(channel, (event: IpcRendererEvent, data: string) => {
+      const handler = (event: IpcRendererEvent, data: string) => {
         observer.next(stringToChunk(data));
-      });
+      };
+      this.ipcRenderer.on(channel, handler);
+      return () => {
+        this.ipcRenderer.off(channel, handler);
+      };
     });
   }
 }

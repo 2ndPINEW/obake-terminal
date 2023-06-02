@@ -1,0 +1,11 @@
+:host {
+  display: block;
+  height: 100%;
+  width: 100dvw;
+  overflow: auto;
+
+  .workspaces {
+    display: flex;
+    height: 100%;
+  }
+}

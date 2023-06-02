@@ -12,6 +12,7 @@ import { PainComponent } from './components/pain/pain.component';
 import { FooterComponent } from './components/footer/footer.component';
 import { WeatherAnimationComponent } from './components/weather-animation/weather-animation.component';
 import { NgParticlesModule } from 'ng-particles';
+import { WorkspaceComponent } from './components/workspace/workspace.component';
 
 // AoT requires an exported function for factories
 const httpLoaderFactory = (http: HttpClient): TranslateHttpLoader =>
@@ -23,6 +24,7 @@ const httpLoaderFactory = (http: HttpClient): TranslateHttpLoader =>
     PainComponent,
     FooterComponent,
     WeatherAnimationComponent,
+    WorkspaceComponent,
   ],
   imports: [
     BrowserModule,

@@ -1,0 +1,4 @@
+<div class="workspaces">
+  <app-pain *ngFor="let pain of (activeWorkspace$ | async)?.pains; let index = index" [pain]="pain"
+    [index]="index"></app-pain>
+</div>

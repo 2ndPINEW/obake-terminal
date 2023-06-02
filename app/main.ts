@@ -4,6 +4,7 @@ import * as fs from 'fs';
 import { loadData, saveData } from './utils/save-data';
 import { ShellManageService } from './services/shell-manage-service';
 import { Logger } from './utils/logger';
+import { WorkspaceManageService } from './services/workspace-manage-service';
 
 let window: BrowserWindow | null = null;
 const args = process.argv.slice(1),
@@ -43,6 +44,7 @@ function createWindow(): BrowserWindow {
   });
 
   new ShellManageService(window);
+  new WorkspaceManageService(window);
 
   if (serve) {
     const debug = require('electron-debug');

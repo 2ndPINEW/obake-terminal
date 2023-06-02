@@ -24,14 +24,6 @@ export class AppComponent implements AfterViewInit {
       this.electronService.on$(SHELL_MANAGER_CHANNEL).subscribe((chunk) => {
         console.log(chunk);
       });
-
-      this.electronService.send(SHELL_MANAGER_CHANNEL, {
-        createPain: {
-          id: 'test',
-          size: { cols: 80, rows: 40 },
-          cwd: '/',
-        },
-      });
     } else {
       console.log('Run in browser');
     }

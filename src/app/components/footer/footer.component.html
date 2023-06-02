@@ -1,3 +1,4 @@
-<div>
-  obake-terminal
+<div class="tabicon">
+  <div class="icon" [style.backgroundColor]="(activeWorkspace$ | async)?.color"></div>
+  <div class="label">{{(activeWorkspace$ | async)?.name}}</div>
 </div>
