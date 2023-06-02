@@ -1,12 +1,10 @@
 /* eslint-disable @angular-eslint/use-lifecycle-interface */
 /* eslint-disable @typescript-eslint/member-ordering */
 import {
-  ChangeDetectorRef,
   Component,
   ElementRef,
   HostListener,
   Input,
-  NgZone,
   OnDestroy,
   ViewChild,
 } from '@angular/core';
@@ -40,8 +38,7 @@ export class PainComponent implements OnDestroy {
 
   constructor(
     private readonly electronService: ElectronService,
-    private readonly workspaceService: WorkspaceService,
-    private readonly cdRef: ChangeDetectorRef
+    private readonly workspaceService: WorkspaceService
   ) {}
 
   @Input()
@@ -57,6 +54,9 @@ export class PainComponent implements OnDestroy {
       if (index === this.index) {
         this.runInInit();
       }
+      window.setTimeout(() => {
+        this.onResize();
+      }, 200);
     });
   }
 
@@ -138,14 +138,9 @@ export class PainComponent implements OnDestroy {
   onKeyDown(event: KeyboardEvent) {
     if (event.code === 'KeyT' && event.metaKey) {
       this.workspaceService.createPain$(this.pain.workspaceId).subscribe(() => {
-        this.workspaceService.requestUpdateWorkspaceManagerInfo();
-        window.setTimeout(() => {
-          this.cdRef.detectChanges();
-          this.workspaceService.activePainIndex$.next(
-            this.workspaceService.workspacePains(this.pain.workspaceId).length -
-              1
-          );
-        });
+        this.workspaceService.activePainIndex$.next(
+          this.workspaceService.workspacePains(this.pain.workspaceId).length - 1
+        );
       });
     }
   }

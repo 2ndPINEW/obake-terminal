@@ -6,6 +6,7 @@ import {
   filter,
   first,
   map,
+  tap,
 } from 'rxjs';
 import { ElectronService } from './electron/electron.service';
 import { WORKSPACE_MANAGER_CHANNEL } from '../../../app/shared/constants/channel';
@@ -97,6 +98,9 @@ export class WorkspaceService {
         };
         this.pains.push(pain);
         return pain;
+      }),
+      tap(() => {
+        this.requestUpdateWorkspaceManagerInfo();
       })
     );
   }
