@@ -27,7 +27,7 @@ export class LocalFontService {
     window.queryLocalFonts !== undefined ||
     navigator.fonts?.query !== undefined;
 
-  currentFontFamily$ = new BehaviorSubject<string>('sans-serif');
+  readonly currentFontFamily$ = new BehaviorSubject<string>('sans-serif');
 
   constructor() {
     this.currentFontFamily$.subscribe((family) => {
