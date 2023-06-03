@@ -3,6 +3,7 @@
 import { ComponentRef } from '@angular/core';
 import { Injectable, ViewContainerRef } from '@angular/core';
 import { BehaviorSubject } from 'rxjs';
+import { WorkspaceService } from './workspace.service';
 
 @Injectable({
   providedIn: 'root',
@@ -12,6 +13,8 @@ export class ModalService {
   isOpen$ = new BehaviorSubject<boolean>(false);
 
   private currentComponentRef: ComponentRef<any> | undefined;
+
+  constructor(private workspaceService: WorkspaceService) {}
 
   open(data: any) {
     if (this.isOpen$.value) {
@@ -29,9 +32,13 @@ export class ModalService {
     if (!this.isOpen$.value) {
       return;
     }
-    console.log('ModalService.close()');
     this.currentComponentRef?.destroy();
     this.currentComponentRef = undefined;
     this.isOpen$.next(false);
+
+    // 閉じた時にターミナルにフォーカスを戻したい
+    this.workspaceService.activePainIndex$.next(
+      this.workspaceService.activePainIndex$.value
+    );
   }
 }
