@@ -1,9 +1,9 @@
 import { app } from 'electron';
 import * as os from 'node:os';
 import * as path from 'node:path';
-import { writeFileSync, readFileSync, existsSync } from 'node:fs';
+import { writeFileSync, readFileSync, existsSync, mkdirSync } from 'node:fs';
 
-type DataBlock =
+export type DataBlock =
   | {
       key: 'userData.restore-window-state';
       data: {
@@ -21,6 +21,7 @@ type DataBlock =
         apiPort: number;
         repositoryBasePath: string;
         workspaceConfigBasePath: string;
+        fontFamily: string;
       };
     };
 
@@ -39,6 +40,7 @@ const DefaultValue: {
     apiPort: 9435,
     repositoryBasePath: '~/dev',
     workspaceConfigBasePath: '~/workspaces',
+    fontFamily: 'sans-serif',
   },
 };
 
@@ -56,6 +58,13 @@ const getDataPath = (key: DataBlock['key']): string => {
 export const saveData = (data: DataBlock): void => {
   const { key, data: dataToSave } = data;
   const dataPath = getDataPath(key);
+
+  // ディレクトリが存在しない場合は作成する
+  const directoryPath = dataPath.substring(0, dataPath.lastIndexOf('/'));
+  if (!existsSync(directoryPath)) {
+    mkdirSync(directoryPath, { recursive: true });
+  }
+
   writeFileSync(dataPath, JSON.stringify(dataToSave), 'utf8');
 };
 

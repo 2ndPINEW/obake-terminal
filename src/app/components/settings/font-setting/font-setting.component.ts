@@ -1,9 +1,10 @@
-import { Component, OnInit } from '@angular/core';
+import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
 import {
   FontFamily,
   LocalFontService,
 } from '../../../services/local-font.service';
-import { map } from 'rxjs';
+import { map, of, switchMap } from 'rxjs';
+import { SettingService } from '../../../services/setting.service';
 
 @Component({
   selector: 'app-font-setting',
@@ -17,7 +18,11 @@ export class FontSettingComponent implements OnInit {
 
   currentFontFamily$ = this.localFontService.currentFontFamily$;
 
-  constructor(private localFontService: LocalFontService) {}
+  constructor(
+    private localFontService: LocalFontService,
+    private settingService: SettingService,
+    private cdRef: ChangeDetectorRef
+  ) {}
 
   ngOnInit(): void {
     this.updateList();
@@ -41,7 +46,29 @@ export class FontSettingComponent implements OnInit {
   }
 
   handleClick(family: string): void {
-    this.localFontService.switchFontFamily$(family).subscribe();
+    const key = 'configData.app-config';
+    this.settingService
+      .readSetting$(key)
+      .pipe(
+        switchMap((setting) =>
+          this.settingService.saveSetting$({
+            key,
+            data: {
+              ...setting.data,
+              fontFamily: family,
+            },
+          })
+        ),
+        switchMap((status) => {
+          if (status === 'success') {
+            return this.localFontService.switchFontFamily$(family);
+          }
+          return of();
+        })
+      )
+      .subscribe(() => {
+        this.cdRef.detectChanges();
+      });
   }
 
   onValueChange(): void {

@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 import { BehaviorSubject, from, map, of } from 'rxjs';
+import { SettingService } from './setting.service';
 
 interface FontData {
   family: string;
@@ -38,10 +39,21 @@ export class LocalFontService {
 
   readonly currentFontFamily$ = new BehaviorSubject<string>('sans-serif');
 
-  constructor() {
+  constructor(private settingService: SettingService) {
     this.currentFontFamily$.subscribe((family) => {
       document.body.style.fontFamily = family;
     });
+  }
+
+  init() {
+    this.settingService
+      .readSetting$('configData.app-config')
+      .subscribe((setting) => {
+        const fontFamily = setting.data.fontFamily;
+        this.switchFontFamily$(fontFamily).subscribe((isComplete) => {
+          console.log(isComplete);
+        });
+      });
   }
 
   queryLocalFonts$() {

@@ -21,7 +21,7 @@ export class AppComponent implements AfterViewInit, OnInit {
   }
 
   ngOnInit() {
-    this.localFontService.switchFontFamily$('FiraCode NF').subscribe();
+    this.localFontService.init();
     console.log('APP_CONFIG', APP_CONFIG);
 
     if (this.electronService.isElectron) {

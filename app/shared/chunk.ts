@@ -1,3 +1,4 @@
+import { DataBlock } from '../utils/save-data';
 import { WorkspaceManagerInfo, WorkspaceManagerMode } from './workspace';
 
 export interface Chunk {
@@ -30,7 +31,21 @@ export interface Chunk {
   requestWorkspaceAdd?: RequestWorkspaceAdd;
   /** ターミナルでモード変更時にメインプロセスに状態を送っておく */
   workspaceManagerModeChanged?: WorkspaceManagerMode;
+  /** ターミナルから設定の値読み取りをリクエスト */
+  requestSettingRead?: DataBlock['key'];
+  /** メインプロセスからターミナルに設定の値を送る */
+  setting?: DataBlock;
+  /** ターミナルから設定の値書き込みをリクエスト */
+  requestSettingWrite?: SettingWriteRequest;
+  settingWriteStatus?: {
+    requestId: string;
+    status: 'success' | 'error';
+  };
 }
+
+export type SettingWriteRequest = DataBlock & {
+  requestId: string;
+};
 
 export interface CreatePainChunk {
   id: string;
