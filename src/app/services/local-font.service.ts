@@ -19,6 +19,9 @@ declare global {
   }
 }
 
+/**
+ * ローカルにインストールされているフォントを取得、切り替えるためのサービス
+ */
 @Injectable({
   providedIn: 'root',
 })
