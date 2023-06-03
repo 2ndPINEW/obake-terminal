@@ -4,6 +4,7 @@ import { TranslateService } from '@ngx-translate/core';
 import { APP_CONFIG } from '../environments/environment';
 import { SHELL_MANAGER_CHANNEL } from '../../app/shared/constants/channel';
 import { timer } from 'rxjs';
+import { LocalFontService } from './services/local-font.service';
 
 @Component({
   selector: 'app-root',
@@ -13,10 +14,13 @@ import { timer } from 'rxjs';
 export class AppComponent implements AfterViewInit {
   constructor(
     private electronService: ElectronService,
-    private translate: TranslateService
+    private translate: TranslateService,
+    private localFontService: LocalFontService
   ) {
     this.translate.setDefaultLang('ja');
     console.log('APP_CONFIG', APP_CONFIG);
+
+    this.localFontService.switchFontFamily$('FiraCode NF').subscribe();
 
     if (electronService.isElectron) {
       console.log('Run in electron');
