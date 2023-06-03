@@ -45,6 +45,8 @@ export class LocalFontService {
     return of([] as FontData[]);
   }
 
+  // めちゃなうい記事発見
+  // https://developer.chrome.com/blog/how-boxysvg-uses-the-local-font-access-api/
   fontFamilies$() {
     return this.queryLocalFonts$().pipe(
       map((localFonts) => {
