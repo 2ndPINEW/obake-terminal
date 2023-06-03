@@ -10,8 +10,6 @@ export class ModalService {
 
   private currentComponentRef: ComponentRef<any> | undefined;
 
-  constructor() {}
-
   open(data: any) {
     if (this.isOpen) {
       return;
