@@ -12,7 +12,7 @@ import { ModalService } from '../../services/modal.service';
   styleUrls: ['./modal.component.scss'],
 })
 export class ModalComponent implements AfterViewInit {
-  @ViewChild('modalInner', { read: ViewContainerRef }) vcr: any;
+  @ViewChild('modalInner', { read: ViewContainerRef }) vcr!: ViewContainerRef;
 
   isOpen$ = this.modalService.isOpen$;
 

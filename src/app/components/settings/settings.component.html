@@ -1,3 +1,9 @@
-<h1>Settings</h1>
+<h1 class="title">設定</h1>
 
-<app-font-setting></app-font-setting>
+<div class="tabs">
+  <button class="tab" *ngFor="let setting of settings" (click)="switchSetting(setting.id)"
+    [class.active]="setting.id === activeSetting">
+    {{setting.name}}
+  </button>
+</div>
+<div #settingArea></div>
