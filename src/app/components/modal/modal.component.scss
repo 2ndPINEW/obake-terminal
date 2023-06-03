@@ -1,0 +1,34 @@
+:host {
+  display: block;
+
+  .wrapper {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: fixed;
+    left: 0;
+    top: 0;
+    z-index: 99999;
+    height: 100vh;
+    height: 100dvh;
+    width: 100vw;
+    width: 100dvw;
+
+    background-color: var(--color-modal-outside);
+    visibility: hidden;
+
+    &.show {
+      visibility: visible;
+    }
+
+    .modal-area {
+      width: 80%;
+      height: 80%;
+      max-width: 1280px;
+      background-color: var(--color-modal-background);
+      border-radius: 32px;
+      padding: 32px;
+      border: solid 1px var(--color-modal-border);
+    }
+  }
+}

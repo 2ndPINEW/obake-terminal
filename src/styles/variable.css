@@ -3,9 +3,13 @@
   --color-primary: #fff;
   --color-border: #414141;
 
-
   --color-text: #fff;
 
   --color-tab-background: #424242;
   --color-tab-text: #fff;
+
+  --color-modal-outside: rgba(0, 0, 0, 0.5);
+  --color-modal-border: #fff;
+  --color-modal-background: #000;
+  --color-modal-text: #fff;
 }
