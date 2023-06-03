@@ -17,6 +17,8 @@ import { ModalComponent } from './components/modal/modal.component';
 import { SettingsComponent } from './components/settings/settings.component';
 import { FontSettingComponent } from './components/settings/font-setting/font-setting.component';
 import { GeneralSettingComponent } from './components/settings/general-setting/general-setting.component';
+import { WorkspaceManageComponent } from './components/workspace-manage/workspace-manage.component';
+import { ShortcutSettingComponent } from './components/settings/shortcut-setting/shortcut-setting.component';
 
 // AoT requires an exported function for factories
 const httpLoaderFactory = (http: HttpClient): TranslateHttpLoader =>
@@ -33,6 +35,8 @@ const httpLoaderFactory = (http: HttpClient): TranslateHttpLoader =>
     SettingsComponent,
     FontSettingComponent,
     GeneralSettingComponent,
+    WorkspaceManageComponent,
+    ShortcutSettingComponent,
   ],
   imports: [
     BrowserModule,

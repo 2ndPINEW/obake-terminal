@@ -6,6 +6,7 @@ import {
 } from '@angular/core';
 import { FontSettingComponent } from './font-setting/font-setting.component';
 import { GeneralSettingComponent } from './general-setting/general-setting.component';
+import { ShortcutSettingComponent } from './shortcut-setting/shortcut-setting.component';
 
 @Component({
   selector: 'app-settings',
@@ -23,6 +24,11 @@ export class SettingsComponent implements AfterViewInit {
       id: 'general',
       name: '一般',
       component: GeneralSettingComponent,
+    },
+    {
+      id: 'shortcut',
+      name: 'ショートカット',
+      component: ShortcutSettingComponent,
     },
     {
       id: 'font',

@@ -2,6 +2,7 @@ import { Component, HostListener } from '@angular/core';
 import { WorkspaceService } from '../../services/workspace.service';
 import { ModalService } from '../../services/modal.service';
 import { SettingsComponent } from '../settings/settings.component';
+import { WorkspaceManageComponent } from '../workspace-manage/workspace-manage.component';
 
 @Component({
   selector: 'app-workspace',
@@ -19,12 +20,12 @@ export class WorkspaceComponent {
 
   @HostListener('window:keydown', ['$event'])
   handleKeyDown(event: KeyboardEvent) {
+    console.log('workspace.component.ts', event);
     if (event.code === 'KeyS' && event.metaKey) {
-      if (this.modalService.isOpen$.value) {
-        this.modalService.close();
-      } else {
-        this.modalService.open(SettingsComponent);
-      }
+      this.modalService.openOrClose(SettingsComponent);
+    }
+    if (event.code === 'Quote' && event.metaKey) {
+      this.modalService.openOrClose(WorkspaceManageComponent);
     }
   }
 }

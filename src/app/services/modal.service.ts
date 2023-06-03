@@ -41,4 +41,12 @@ export class ModalService {
       this.workspaceService.activePainIndex$.value
     );
   }
+
+  openOrClose(data: any) {
+    if (this.isOpen$.value) {
+      this.close();
+    } else {
+      this.open(data);
+    }
+  }
 }
