@@ -27,6 +27,7 @@ export class ModalService {
   close() {
     console.log('ModalService.close()');
     this.currentComponentRef?.destroy();
+    this.currentComponentRef = undefined;
     this.isOpen = false;
   }
 }
