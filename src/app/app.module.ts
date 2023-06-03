@@ -13,6 +13,8 @@ import { FooterComponent } from './components/footer/footer.component';
 import { WeatherAnimationComponent } from './components/weather-animation/weather-animation.component';
 import { NgParticlesModule } from 'ng-particles';
 import { WorkspaceComponent } from './components/workspace/workspace.component';
+import { ModalComponent } from './components/modal/modal.component';
+import { SettingsComponent } from './components/settings/settings.component';
 
 // AoT requires an exported function for factories
 const httpLoaderFactory = (http: HttpClient): TranslateHttpLoader =>
@@ -25,6 +27,8 @@ const httpLoaderFactory = (http: HttpClient): TranslateHttpLoader =>
     FooterComponent,
     WeatherAnimationComponent,
     WorkspaceComponent,
+    ModalComponent,
+    SettingsComponent,
   ],
   imports: [
     BrowserModule,
