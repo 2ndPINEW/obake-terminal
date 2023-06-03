@@ -16,7 +16,7 @@ export class SettingsComponent implements AfterViewInit {
   @ViewChild('settingArea', { read: ViewContainerRef })
   settingAreaVcr!: ViewContainerRef;
 
-  activeSetting = '';
+  activeSetting = 'general';
 
   readonly settings = [
     {
