@@ -1,4 +1,4 @@
-import { AfterViewInit, Component } from '@angular/core';
+import { AfterViewInit, Component, OnInit } from '@angular/core';
 import { ElectronService } from './services/electron/electron.service';
 import { TranslateService } from '@ngx-translate/core';
 import { APP_CONFIG } from '../environments/environment';
@@ -11,18 +11,20 @@ import { LocalFontService } from './services/local-font.service';
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.scss'],
 })
-export class AppComponent implements AfterViewInit {
+export class AppComponent implements AfterViewInit, OnInit {
   constructor(
     private electronService: ElectronService,
     private translate: TranslateService,
     private localFontService: LocalFontService
   ) {
     this.translate.setDefaultLang('ja');
+  }
+
+  ngOnInit() {
+    this.localFontService.switchFontFamily$('FiraCode NF').subscribe();
     console.log('APP_CONFIG', APP_CONFIG);
 
-    this.localFontService.switchFontFamily$('FiraCode NF').subscribe();
-
-    if (electronService.isElectron) {
+    if (this.electronService.isElectron) {
       console.log('Run in electron');
 
       this.electronService.on$(SHELL_MANAGER_CHANNEL).subscribe((chunk) => {
