@@ -8,6 +8,12 @@ interface FontData {
   style: string;
 }
 
+export interface FontFamily {
+  family: string;
+  faces: string[];
+  query: string;
+}
+
 declare global {
   interface Window {
     queryLocalFonts: () => Promise<FontData[]>;
@@ -53,10 +59,7 @@ export class LocalFontService {
   fontFamilies$() {
     return this.queryLocalFonts$().pipe(
       map((localFonts) => {
-        const fontsIndex: {
-          family: string;
-          faces: string[];
-        }[] = [];
+        const fontsIndex: FontFamily[] = [];
 
         for (const localFont of localFonts) {
           let face = '400';
@@ -96,10 +99,12 @@ export class LocalFontService {
             if (descriptor.faces.includes(face) === false) {
               descriptor.faces.push(face);
             }
+            descriptor.query += `, ${localFont.fullName}`;
           } else {
             const desc = {
               family: localFont.family,
               faces: [face],
+              query: localFont.fullName,
             };
 
             fontsIndex.push(desc);

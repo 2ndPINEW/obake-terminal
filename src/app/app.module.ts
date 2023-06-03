@@ -15,6 +15,7 @@ import { NgParticlesModule } from 'ng-particles';
 import { WorkspaceComponent } from './components/workspace/workspace.component';
 import { ModalComponent } from './components/modal/modal.component';
 import { SettingsComponent } from './components/settings/settings.component';
+import { FontSettingComponent } from './components/settings/font-setting/font-setting.component';
 
 // AoT requires an exported function for factories
 const httpLoaderFactory = (http: HttpClient): TranslateHttpLoader =>
@@ -29,6 +30,7 @@ const httpLoaderFactory = (http: HttpClient): TranslateHttpLoader =>
     WorkspaceComponent,
     ModalComponent,
     SettingsComponent,
+    FontSettingComponent,
   ],
   imports: [
     BrowserModule,

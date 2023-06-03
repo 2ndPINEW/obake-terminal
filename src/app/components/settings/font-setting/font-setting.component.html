@@ -1,0 +1,7 @@
+<h2>Font</h2>
+
+<input type="text" [(ngModel)]="queryValue" (ngModelChange)="onValueChange()">
+<br>
+
+<button *ngFor="let fontFamily of fontFamilies" (click)="handleClick(fontFamily.family)"
+  [style.fontFamily]="fontFamily.family">{{fontFamily.family}}</button>

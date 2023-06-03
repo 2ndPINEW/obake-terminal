@@ -15,3 +15,10 @@ body {
 .xterm-dom-renderer-owner-1 .xterm-rows {
   font-family: unset !important;
 }
+
+input {
+  background-color: var(--color-background);
+  border: solid 1px var(--color-border);
+  color: var(--color-text);
+  padding: 0.3rem;
+}
