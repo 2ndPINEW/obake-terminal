@@ -1,4 +1,4 @@
-import { Component, HostListener, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 import { WorkspaceService } from '../../services/workspace.service';
 import { BehaviorSubject } from 'rxjs';
 
