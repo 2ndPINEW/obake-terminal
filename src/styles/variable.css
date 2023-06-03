@@ -13,4 +13,9 @@
   --color-modal-text: #fff;
 
   --color-tab-border: #fff;
+
+  --color-button-background: #3d3d3d;
+  --color-button-text: #fff;
+  --color-button-active-background: #fff;
+  --color-button-active-text: #000;
 }

@@ -15,6 +15,8 @@ export class FontSettingComponent implements OnInit {
 
   queryValue = '';
 
+  currentFontFamily$ = this.localFontService.currentFontFamily$;
+
   constructor(private localFontService: LocalFontService) {}
 
   ngOnInit(): void {

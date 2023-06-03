@@ -3,5 +3,18 @@
 
   button {
     margin: 2px;
+    border: none;
+    border-radius: 4px;
+    padding: 4px 8px;
+
+    background-color: var(--color-button-background);
+    color: var(--color-button-text);
+
+    cursor: pointer;
+
+    &.active {
+      background-color: var(--color-button-active-background);
+      color: var(--color-button-active-text);
+    }
   }
 }

@@ -2,4 +2,5 @@
 <br>
 
 <button *ngFor="let fontFamily of fontFamilies" (click)="handleClick(fontFamily.family)"
-  [style.fontFamily]="fontFamily.family">{{fontFamily.family}}</button>
+  [style.fontFamily]="fontFamily.family"
+  [class.active]="(currentFontFamily$ | async) === fontFamily.family">{{fontFamily.family}}</button>
