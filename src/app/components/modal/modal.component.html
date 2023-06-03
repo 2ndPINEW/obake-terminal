@@ -1,4 +1,4 @@
-<div class="wrapper" [class.show]="isOpen">
+<div class="wrapper" [class.show]="isOpen$ | async">
   <div class="modal-area">
     <div #modalInner></div>
   </div>

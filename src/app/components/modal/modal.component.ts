@@ -14,7 +14,7 @@ import { ModalService } from '../../services/modal.service';
 export class ModalComponent implements AfterViewInit {
   @ViewChild('modalInner', { read: ViewContainerRef }) vcr: any;
 
-  isOpen = this.modalService.isOpen;
+  isOpen$ = this.modalService.isOpen$;
 
   constructor(private modalService: ModalService) {}
 
