@@ -193,9 +193,9 @@ export const addWorkspaceStep2CreateCodeWorkspace = ({
   name: string;
   localRepositoryPath: string;
 }) => {
-  writeFileSync(
-    `${workspaceConfigBasePath}/${name}${codeWorkspaceExtension}`,
-    codeWorkspaceBase(localRepositoryPath),
-    { encoding: 'utf-8' }
-  );
+  const filePath = `${workspaceConfigBasePath}/${name}${codeWorkspaceExtension}`;
+  writeFileSync(filePath, codeWorkspaceBase(localRepositoryPath), {
+    encoding: 'utf-8',
+  });
+  return { filePath };
 };

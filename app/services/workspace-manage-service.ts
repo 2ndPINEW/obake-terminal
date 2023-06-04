@@ -167,7 +167,7 @@ export class WorkspaceManageService {
       },
     });
 
-    addWorkspaceStep2CreateCodeWorkspace({
+    const { filePath } = addWorkspaceStep2CreateCodeWorkspace({
       localRepositoryPath,
       name: data.name,
     });
@@ -187,7 +187,7 @@ export class WorkspaceManageService {
     });
 
     this.updateWorkspaceList();
-    this.switchWorkspace(localRepositoryPath);
+    this.switchWorkspace(filePath);
 
     this.sendElectronWindowChunk({
       workspaceAddProgress: {
