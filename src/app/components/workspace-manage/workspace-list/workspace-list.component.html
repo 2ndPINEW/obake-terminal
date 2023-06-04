@@ -1,1 +1,10 @@
-<p>workspace-list works!</p>
+<input #inputArea type="text" [(ngModel)]="inputValue" (keydown)="onKeyDown($event)" (blur)="onBlur()">
+
+<div class="workspace-list">
+  <div class="workspace" *ngFor="let workspace of displayWorkspaces; let index = index"
+    [class.active]="index === activeIndex">
+    <div class="icon" [style.backgroundColor]="workspace.color"></div>
+    <div class="name">{{workspace.name}}</div>
+    <div class="cwd">{{workspace.cwd}}</div>
+  </div>
+</div>

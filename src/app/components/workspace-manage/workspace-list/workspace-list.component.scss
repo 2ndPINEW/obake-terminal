@@ -1,0 +1,51 @@
+:host {
+  display: block;
+
+  input {
+    width: 100%;
+  }
+
+  .workspace-list {
+    margin-top: 16px;
+
+    .workspace {
+      display: flex;
+      align-items: center;
+      background-color: var(--color-selector-background);
+      color: var(--color-selector-text);
+      border-radius: 4px;
+      padding: 4px 8px;
+
+      &.active {
+        background-color: var(--color-selector-active-background);
+        color: var(--color-selector-active-text);
+      }
+
+      .icon {
+        width: 10px;
+        height: 10px;
+        border-radius: 100%;
+      }
+
+      .name {
+        flex-shrink: 0;
+        margin-left: 8px;
+      }
+
+      .cwd {
+        flex-grow: 1;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+        margin-left: 8px;
+        color: var(--color-selector-text-hint);
+      }
+
+      &.active {
+        .cwd {
+          color: var(--color-selector-active-text-hint);
+        }
+      }
+    }
+  }
+}

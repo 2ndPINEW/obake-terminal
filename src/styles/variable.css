@@ -18,4 +18,11 @@
   --color-button-text: #fff;
   --color-button-active-background: #fff;
   --color-button-active-text: #000;
+
+  --color-selector-background: #000;
+  --color-selector-text: #fff;
+  --color-selector-text-hint: #c4c4c4;
+  --color-selector-active-background: #fff;
+  --color-selector-active-text: #000;
+  --color-selector-active-text-hint: #6d6d6d;
 }
