@@ -1,1 +1,8 @@
-<p>workspace-manage works!</p>
+<h1 class="title">ワークスペース管理</h1>
+
+<div class="tabs">
+  <button class="tab" *ngFor="let tab of tabs" (click)="switchSetting(tab.id)" [class.active]="tab.id === activeTab">
+    {{tab.name}}
+  </button>
+</div>
+<div #settingArea></div>

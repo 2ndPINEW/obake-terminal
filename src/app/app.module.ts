@@ -19,6 +19,8 @@ import { FontSettingComponent } from './components/settings/font-setting/font-se
 import { GeneralSettingComponent } from './components/settings/general-setting/general-setting.component';
 import { WorkspaceManageComponent } from './components/workspace-manage/workspace-manage.component';
 import { ShortcutSettingComponent } from './components/settings/shortcut-setting/shortcut-setting.component';
+import { WorkspaceListComponent } from './components/workspace-manage/workspace-list/workspace-list.component';
+import { WorkspaceCreateComponent } from './components/workspace-manage/workspace-create/workspace-create.component';
 
 // AoT requires an exported function for factories
 const httpLoaderFactory = (http: HttpClient): TranslateHttpLoader =>
@@ -37,6 +39,8 @@ const httpLoaderFactory = (http: HttpClient): TranslateHttpLoader =>
     GeneralSettingComponent,
     WorkspaceManageComponent,
     ShortcutSettingComponent,
+    WorkspaceListComponent,
+    WorkspaceCreateComponent,
   ],
   imports: [
     BrowserModule,
