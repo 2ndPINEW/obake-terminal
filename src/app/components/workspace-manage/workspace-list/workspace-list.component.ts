@@ -40,6 +40,7 @@ export class WorkspaceListComponent implements OnInit, AfterViewInit {
     this.workspaceService.workspaceManagerInfo$
       .pipe(first())
       .subscribe((info) => {
+        console.log('info', info);
         this.workspaces = info.workspaces;
         this.updateShowList();
         this.cdRef.detectChanges();

@@ -8,9 +8,11 @@ import {
 import { BrowserWindow, IpcMainEvent, ipcMain } from 'electron';
 import { WORKSPACE_MANAGER_CHANNEL } from '../shared/constants/channel';
 import {
+  Workspace,
   WorkspaceManagerInfo,
   WorkspaceManagerMode,
 } from '../shared/workspace';
+import { listWorkspace } from '../utils/workspace';
 
 export class WorkspaceManageService {
   private electronWindow: BrowserWindow;
@@ -23,6 +25,8 @@ export class WorkspaceManageService {
   }>();
 
   private mode: WorkspaceManagerMode = 'MANAGED';
+
+  private workspaces: Workspace[] = [];
 
   private ipcMainEvent$ = this.ipcMainRawEvent$.pipe(
     map(({ event, arg }) => ({ event, arg: stringToChunk(arg) }))
@@ -70,45 +74,70 @@ export class WorkspaceManageService {
     this.subscription.add(
       this.ipcMainWorkspaceSwitchRequest$.subscribe((workspaceId) => {
         console.log('WorkspaceSwitchRequest', workspaceId);
-        this.sendElectronWindowWorkspaceManagerInfo();
+        this.switchWorkspace(workspaceId);
       })
     );
 
     this.subscription.add(
       this.ipcMainWorkspaceAddRequest$.subscribe((workspace) => {
         console.log('WorkspaceAddRequest', workspace);
-        this.sendElectronWindowWorkspaceManagerInfo();
+        // this.addWorkspace(workspace);
       })
     );
   }
 
+  updateWorkspaceList() {
+    this.workspaces = listWorkspace().map((workspace) => {
+      const current = this.workspaces.find((w) => w.id === workspace.id);
+      return {
+        ...workspace,
+        status: current?.status || workspace.status,
+        color: current?.color || workspace.color,
+      };
+    });
+  }
+
   getWorkspaceManagerInfo(): WorkspaceManagerInfo {
+    this.updateWorkspaceList();
     return {
       mode: this.mode,
-      workspaces: [
-        {
-          name: 'obake-terminal',
-          cwd: '/Users/takaseeito/dev/github.com/2ndPINEW/obake-terminal',
-          status: 'ACTIVE',
-          color: '#5f930b',
-          id: 'obake-terminal',
-        },
-        {
-          name: 'obake-terminal2',
-          cwd: '/Users/takaseeito/dev/github.com/2ndPINEW/obake-terminal',
-          status: 'INACTIVE',
-          color: '#8d3c8d',
-          id: 'obake-terminal2',
-        },
-        {
-          name: 'obake-terminal3',
-          cwd: '/Users/takaseeito/dev/github.com/2ndPINEW/obake-terminal',
-          status: 'INACTIVE',
-          color: '#78d5c3',
-          id: 'obake-terminal3',
-        },
-      ],
+      workspaces: this.workspaces,
     };
+  }
+
+  addWorkspace(data: RequestWorkspaceAdd) {
+    // this.workspaces = this.workspaces.map((workspace) => {
+    //   return {
+    //     ...workspace,
+    //     status: workspace.status === 'ACTIVE' ? 'BACKGROUND' : workspace.status,
+    //   };
+    // });
+    // const workspace: Workspace = {
+    //   id: workspaceId,
+    //   name: workspaceId,
+    //   cwd: '/',
+    //   color: `#${Math.floor(Math.random() * 16777215).toString(16)}`,
+    //   status: 'ACTIVE',
+    // };
+    // this.workspaces.push(workspace);
+    // this.sendElectronWindowWorkspaceManagerInfo();
+  }
+
+  switchWorkspace(workspaceId: string) {
+    this.workspaces = this.workspaces.map((workspace) => {
+      if (workspace.id === workspaceId) {
+        return {
+          ...workspace,
+          status: 'ACTIVE',
+        };
+      } else {
+        return {
+          ...workspace,
+          status: workspace.status === 'ACTIVE' ? 'BACKGROUND' : 'INACTIVE',
+        };
+      }
+    });
+    this.sendElectronWindowWorkspaceManagerInfo();
   }
 
   sendElectronWindowWorkspaceManagerInfo() {

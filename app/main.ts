@@ -6,6 +6,7 @@ import { ShellManageService } from './services/shell-manage-service';
 import { Logger } from './utils/logger';
 import { WorkspaceManageService } from './services/workspace-manage-service';
 import { SettingManageService } from './services/setting-manage-service';
+import { listWorkspace } from './utils/workspace';
 
 let window: BrowserWindow | null = null;
 const args = process.argv.slice(1),

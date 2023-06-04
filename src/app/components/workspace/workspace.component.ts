@@ -1,4 +1,5 @@
-import { Component, HostListener } from '@angular/core';
+/* eslint-disable @typescript-eslint/member-ordering */
+import { Component, HostListener, OnInit } from '@angular/core';
 import { WorkspaceService } from '../../services/workspace.service';
 import { ModalService } from '../../services/modal.service';
 import { SettingsComponent } from '../settings/settings.component';
@@ -9,7 +10,7 @@ import { WorkspaceManageComponent } from '../workspace-manage/workspace-manage.c
   templateUrl: './workspace.component.html',
   styleUrls: ['./workspace.component.scss'],
 })
-export class WorkspaceComponent {
+export class WorkspaceComponent implements OnInit {
   readonly workspaceManagerInfo$ = this.workspaceService.workspaceManagerInfo$;
   readonly activeWorkspace$ = this.workspaceService.activeWorkspace$;
 
@@ -17,6 +18,14 @@ export class WorkspaceComponent {
     private readonly workspaceService: WorkspaceService,
     private readonly modalService: ModalService
   ) {}
+
+  ngOnInit(): void {
+    this.activeWorkspace$.subscribe((workspace) => {
+      if (!workspace) {
+        this.modalService.open(WorkspaceManageComponent);
+      }
+    });
+  }
 
   @HostListener('window:keydown', ['$event'])
   handleKeyDown(event: KeyboardEvent) {

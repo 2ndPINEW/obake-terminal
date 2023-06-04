@@ -39,7 +39,7 @@ const DefaultValue: {
     isDarkMode: true,
     apiPort: 9435,
     repositoryBasePath: '~/dev',
-    workspaceConfigBasePath: '~/workspaces',
+    workspaceConfigBasePath: '~/.workspaces',
     fontFamily: 'sans-serif',
   },
 };

@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import { Injectable, NgZone } from '@angular/core';
 
 // If you import a module but never use any of the imported values other than as TypeScript types,
 // the resulting javascript file will look as if you never imported the module at all.
@@ -24,7 +24,7 @@ export class ElectronService {
   private childProcess!: typeof childProcess;
   private fs!: typeof fs;
 
-  constructor() {
+  constructor(private zone: NgZone) {
     // Conditional imports
     if (this.isElectron) {
       this.homeDir = window.require('os').homedir();
@@ -82,7 +82,9 @@ export class ElectronService {
         return;
       }
       const handler = (event: IpcRendererEvent, data: string) => {
-        observer.next(stringToChunk(data));
+        this.zone.run(() => {
+          observer.next(stringToChunk(data));
+        });
       };
       this.ipcRenderer.on(channel, handler);
       return () => {
