@@ -32,7 +32,7 @@ export class WorkspaceCreateComponent {
         if (!event) {
           return;
         }
-        if (this.logs.length <= event.step) {
+        for (let i = this.logs.length; i <= event.step; i++) {
           this.logs.push([]);
         }
         this.logs[event.step].push(event.message);
