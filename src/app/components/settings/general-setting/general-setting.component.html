@@ -1,1 +1,15 @@
-<p>general-setting works!</p>
+<div class="wrapper" *ngIf="setting">
+  <button class="save-button" (click)="saveSetting()">保存する</button>
+  <h2>リポジトリ</h2>
+  <h3>パス</h3>
+  <input type="text" [(ngModel)]="setting.data.repositoryBasePath">
+  <div class="description">リポジトリをクローンする基準になるパスです</div>
+  <h2>ワークスペース</h2>
+  <h3>パス</h3>
+  <input type="text" [(ngModel)]="setting.data.workspaceConfigBasePath">
+  <div class="description">ワークスペースの設定ファイルを保存するパスです</div>
+  <h2>API</h2>
+  <h3>ポート</h3>
+  <input type="number" [(ngModel)]="setting.data.apiPort">
+  <div class="description">ローカルAPIのポート番号です</div>
+</div>

@@ -54,6 +54,7 @@
     "@angular/platform-browser-dynamic": "15.2.9",
     "@angular/router": "15.2.9",
     "canvas-confetti": "1.6.0",
+    "fastify": "4.17.0",
     "ng-particles": "3.9.3",
     "rxjs": "7.8.1",
     "simple-git": "3.19.0",

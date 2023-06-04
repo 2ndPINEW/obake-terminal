@@ -1,0 +1,22 @@
+:host {
+  display: block;
+
+  .wrapper {
+    .save-button {
+      position: absolute;
+      right: 0;
+    }
+
+    h2 {
+      margin: 16px 0;
+    }
+
+    h3 {
+      margin: 8px 0;
+    }
+
+    .description {
+      margin: 8px 0;
+    }
+  }
+}

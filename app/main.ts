@@ -6,11 +6,13 @@ import { ShellManageService } from './services/shell-manage-service';
 import { Logger } from './utils/logger';
 import { WorkspaceManageService } from './services/workspace-manage-service';
 import { SettingManageService } from './services/setting-manage-service';
-import { listWorkspace } from './utils/workspace';
+import { ApiService } from './services/api-service';
 
 let window: BrowserWindow | null = null;
 const args = process.argv.slice(1),
   serve = args.some((val) => val === '--serve');
+
+const server = new ApiService();
 
 function createWindow(): BrowserWindow {
   const { x, y, width, height, isFullScreen } = loadData(
@@ -46,8 +48,9 @@ function createWindow(): BrowserWindow {
   });
 
   new ShellManageService(window);
-  new WorkspaceManageService(window);
   new SettingManageService(window);
+  const workspaceManageServiceInstance = new WorkspaceManageService(window);
+  server.updateWorkspaceManageService(workspaceManageServiceInstance);
 
   if (serve) {
     const debug = require('electron-debug');

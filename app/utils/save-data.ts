@@ -3,6 +3,11 @@ import * as os from 'node:os';
 import * as path from 'node:path';
 import { writeFileSync, readFileSync, existsSync, mkdirSync } from 'node:fs';
 
+export type ExtractDataBlockTypeByKey<T extends DataBlock['key']> = Extract<
+  DataBlock,
+  { key: T }
+>;
+
 export type DataBlock =
   | {
       key: 'userData.restore-window-state';
