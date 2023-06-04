@@ -11,6 +11,7 @@ import { WorkspaceService } from '../../../services/workspace.service';
 import { first } from 'rxjs';
 import { ElectronService } from '../../../services/electron/electron.service';
 import { WORKSPACE_MANAGER_CHANNEL } from '../../../../../app/shared/constants/channel';
+import { ModalService } from '../../../services/modal.service';
 
 @Component({
   selector: 'app-workspace-list',
@@ -31,7 +32,8 @@ export class WorkspaceListComponent implements OnInit, AfterViewInit {
   constructor(
     private workspaceService: WorkspaceService,
     private cdRef: ChangeDetectorRef,
-    private electronService: ElectronService
+    private electronService: ElectronService,
+    private modalService: ModalService
   ) {}
 
   ngOnInit(): void {
@@ -61,6 +63,7 @@ export class WorkspaceListComponent implements OnInit, AfterViewInit {
       return;
     }
     if (event.key === 'Enter') {
+      event.preventDefault();
       this.submit();
       return;
     }
@@ -79,6 +82,7 @@ export class WorkspaceListComponent implements OnInit, AfterViewInit {
       this.electronService.send(WORKSPACE_MANAGER_CHANNEL, {
         requestWorkspaceSwitch: workspace.id,
       });
+      this.modalService.close();
     }
   }
 
