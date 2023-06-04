@@ -42,6 +42,6 @@ export class WorkspaceManageComponent implements AfterViewInit {
     if (!component) {
       return;
     }
-    this.settingAreaVcr.createComponent(component);
+    this.settingAreaVcr.createComponent(component as any);
   }
 }

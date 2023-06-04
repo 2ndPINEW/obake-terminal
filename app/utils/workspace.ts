@@ -9,6 +9,10 @@ import {
 import { Workspace } from '../shared/workspace';
 import { loadData } from './save-data';
 import { extname, join } from 'path';
+import { RequestWorkspaceAdd } from '../shared/chunk';
+import { Logger } from './logger';
+import { gitUrlRegex } from '../shared/constants/workspace';
+import { simpleGit } from 'simple-git';
 
 const appConfig = loadData('configData.app-config');
 const homeDir = process.env.HOME;
@@ -134,4 +138,64 @@ export const listWorkspace = (): Workspace[] => {
       id: workspaceSetting.path,
     };
   });
+};
+
+export const addWorkspaceStep0ParseUrl = (data: RequestWorkspaceAdd) => {
+  const { name, url } = data;
+  const match = url.match(gitUrlRegex);
+  if (!match || !match.groups) {
+    return { error: 'Invalid git url' };
+  }
+  const isExistWorkspaceName = existsSync(
+    `${workspaceConfigBasePath}/${name}${codeWorkspaceExtension}`
+  );
+  if (isExistWorkspaceName) {
+    return { error: 'Workspace name is already exist' };
+  }
+  const {
+    host: host1,
+    user: user1,
+    name: repoName1,
+    host2,
+    user2,
+    name2: repoName2,
+  } = match.groups;
+  const host = host1 || host2;
+  const user = user1 || user2;
+  const repoName = repoName1 || repoName2;
+  const localRepositoryPath = `${repositoryBasePath}/${host}/${user}/${repoName}`;
+  return { host, user, repoName, localRepositoryPath };
+};
+
+export const addWorkspaceStep1Clone = async ({
+  gitUrl,
+  localRepositoryPath,
+}: {
+  gitUrl: string;
+  localRepositoryPath: string;
+}) => {
+  const isExist = existsSync(localRepositoryPath);
+  if (!isExist) {
+    const git = simpleGit();
+    try {
+      await git.clone(gitUrl, localRepositoryPath);
+    } catch {
+      return { result: 'failure', localRepositoryPath };
+    }
+  }
+  return { result: isExist ? 'skip' : 'success', localRepositoryPath };
+};
+
+export const addWorkspaceStep2CreateCodeWorkspace = ({
+  name,
+  localRepositoryPath,
+}: {
+  name: string;
+  localRepositoryPath: string;
+}) => {
+  writeFileSync(
+    `${workspaceConfigBasePath}/${name}${codeWorkspaceExtension}`,
+    codeWorkspaceBase(localRepositoryPath),
+    { encoding: 'utf-8' }
+  );
 };

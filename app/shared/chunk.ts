@@ -29,6 +29,12 @@ export interface Chunk {
   requestWorkspaceSwitch?: string;
   /** ターミナルからメインプロセスにワークスペースの追加をリクエストする */
   requestWorkspaceAdd?: RequestWorkspaceAdd;
+  /** ワークスペース作成中の進捗をターミナル側に送る */
+  workspaceAddProgress?: {
+    step: number;
+    message: string;
+    failed?: boolean;
+  };
   /** ターミナルでモード変更時にメインプロセスに状態を送っておく */
   workspaceManagerModeChanged?: WorkspaceManagerMode;
   /** ターミナルから設定の値読み取りをリクエスト */

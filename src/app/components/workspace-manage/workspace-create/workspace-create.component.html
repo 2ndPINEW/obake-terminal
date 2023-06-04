@@ -1,1 +1,7 @@
-<p>workspace-create works!</p>
+<input type="text" placeholder="ワークスペース名" [(ngModel)]="name">
+<input type="text" placeholder="Git URL" [(ngModel)]="url">
+<button (click)="create()">作成</button>
+
+<div class="steps" *ngFor="let step of logs; let stepIndex = index">
+  <div *ngFor="let log of step">{{log}}</div>
+</div>

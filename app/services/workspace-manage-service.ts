@@ -12,7 +12,13 @@ import {
   WorkspaceManagerInfo,
   WorkspaceManagerMode,
 } from '../shared/workspace';
-import { listWorkspace } from '../utils/workspace';
+import {
+  addWorkspaceStep0ParseUrl,
+  addWorkspaceStep1Clone,
+  addWorkspaceStep2CreateCodeWorkspace,
+  listWorkspace,
+} from '../utils/workspace';
+import { Logger } from '../utils/logger';
 
 export class WorkspaceManageService {
   private electronWindow: BrowserWindow;
@@ -79,9 +85,9 @@ export class WorkspaceManageService {
     );
 
     this.subscription.add(
-      this.ipcMainWorkspaceAddRequest$.subscribe((workspace) => {
-        console.log('WorkspaceAddRequest', workspace);
-        // this.addWorkspace(workspace);
+      this.ipcMainWorkspaceAddRequest$.subscribe(async (workspace) => {
+        Logger.debug('WorkspaceAddRequest', workspace);
+        await this.addWorkspace(workspace);
       })
     );
   }
@@ -105,23 +111,91 @@ export class WorkspaceManageService {
     };
   }
 
-  addWorkspace(data: RequestWorkspaceAdd) {
-    // this.workspaces = this.workspaces.map((workspace) => {
-    //   return {
-    //     ...workspace,
-    //     status: workspace.status === 'ACTIVE' ? 'BACKGROUND' : workspace.status,
-    //   };
-    // });
-    // const workspace: Workspace = {
-    //   id: workspaceId,
-    //   name: workspaceId,
-    //   cwd: '/',
-    //   color: `#${Math.floor(Math.random() * 16777215).toString(16)}`,
-    //   status: 'ACTIVE',
-    // };
-    // this.workspaces.push(workspace);
-    // this.sendElectronWindowWorkspaceManagerInfo();
-  }
+  addWorkspace = async (data: RequestWorkspaceAdd) => {
+    this.sendElectronWindowChunk({
+      workspaceAddProgress: {
+        step: 0,
+        message: 'Checking url and name',
+      },
+    });
+
+    const { host, user, repoName, error, localRepositoryPath } =
+      addWorkspaceStep0ParseUrl(data);
+
+    if (error || !host || !user || !repoName || !localRepositoryPath) {
+      Logger.debug('Check error', error);
+      this.sendElectronWindowChunk({
+        workspaceAddProgress: {
+          step: 0,
+          message: `Check error: ${error}`,
+          failed: true,
+        },
+      });
+      return;
+    }
+    this.sendElectronWindowChunk({
+      workspaceAddProgress: {
+        step: 0,
+        message: `Check success: ${host}/${user}/${repoName}`,
+      },
+    });
+
+    this.sendElectronWindowChunk({
+      workspaceAddProgress: {
+        step: 1,
+        message: `Cloning from ${data.url} to ${localRepositoryPath}`,
+      },
+    });
+
+    const { result } = await addWorkspaceStep1Clone({
+      gitUrl: data.url,
+      localRepositoryPath,
+    });
+
+    this.sendElectronWindowChunk({
+      workspaceAddProgress: {
+        step: 1,
+        message: `Clone ${result}`,
+        failed: result === 'failure',
+      },
+    });
+
+    this.sendElectronWindowChunk({
+      workspaceAddProgress: {
+        step: 2,
+        message: 'Creating code workspace',
+      },
+    });
+
+    addWorkspaceStep2CreateCodeWorkspace({
+      localRepositoryPath,
+      name: data.name,
+    });
+
+    this.sendElectronWindowChunk({
+      workspaceAddProgress: {
+        step: 2,
+        message: 'Create code workspace success',
+      },
+    });
+
+    this.sendElectronWindowChunk({
+      workspaceAddProgress: {
+        step: 3,
+        message: 'Switching workspace',
+      },
+    });
+
+    this.updateWorkspaceList();
+    this.switchWorkspace(localRepositoryPath);
+
+    this.sendElectronWindowChunk({
+      workspaceAddProgress: {
+        step: 3,
+        message: 'Switch workspace success',
+      },
+    });
+  };
 
   switchWorkspace(workspaceId: string) {
     this.workspaces = this.workspaces.map((workspace) => {
