@@ -10,7 +10,7 @@ import { WorkspaceCreateComponent } from './workspace-create/workspace-create.co
 @Component({
   selector: 'app-workspace-manage',
   templateUrl: './workspace-manage.component.html',
-  styleUrls: ['./workspace-manage.component.scss'],
+  styleUrls: ['./workspace-manage.component.scss', '../modal/modal-inner.scss'],
 })
 export class WorkspaceManageComponent implements AfterViewInit {
   @ViewChild('settingArea', { read: ViewContainerRef })

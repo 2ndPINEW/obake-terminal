@@ -11,7 +11,7 @@ import { ShortcutSettingComponent } from './shortcut-setting/shortcut-setting.co
 @Component({
   selector: 'app-settings',
   templateUrl: './settings.component.html',
-  styleUrls: ['./settings.component.scss'],
+  styleUrls: ['./settings.component.scss', '../modal/modal-inner.scss'],
 })
 export class SettingsComponent implements AfterViewInit {
   @ViewChild('settingArea', { read: ViewContainerRef })

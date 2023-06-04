@@ -1,0 +1,30 @@
+:host {
+  display: block;
+
+  .tabs {
+    display: flex;
+    margin-top: 8px;
+    margin-bottom: 1rem;
+    border-bottom: solid 1px var(--color-tab-border);
+
+    .tab {
+      padding: 8px 16px;
+      cursor: pointer;
+      background-color: transparent;
+      color: var(--color-text);
+      border: none;
+      border-radius: 0;
+
+      border-bottom: solid 4px transparent;
+
+      &.active {
+        border-bottom: solid 4px var(--color-tab-border);
+      }
+
+      &:hover {
+        background-color: var(--color-primary);
+        color: var(--color-white);
+      }
+    }
+  }
+}
