@@ -44,6 +44,7 @@ function createWindow(): BrowserWindow {
     height: 720,
     fullscreen: isFullScreen,
     fullscreenable: true,
+    titleBarStyle: 'hidden',
     webPreferences: {
       nodeIntegration: true,
       allowRunningInsecureContent: serve,
