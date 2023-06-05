@@ -87,6 +87,10 @@ export class PainComponent implements OnDestroy {
     this.terminal.open(this.terminalElement.nativeElement);
     this.fitAddon.fit();
 
+    this.pain.history.forEach((history) => {
+      this.terminal.write(history);
+    });
+
     this.electronService.send(SHELL_MANAGER_CHANNEL, {
       createPain: {
         id: this.pain.id,
@@ -102,6 +106,7 @@ export class PainComponent implements OnDestroy {
       this.electronService.on$(this.pain.id).subscribe((data) => {
         if (data.output) {
           this.terminal.write(data.output);
+          this.pain.history.push(data.output);
         }
       })
     );

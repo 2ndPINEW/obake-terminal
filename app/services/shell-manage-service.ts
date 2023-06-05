@@ -35,6 +35,11 @@ export class ShellManageService {
     map(({ arg }) => arg.createPain as CreatePainChunk)
   );
 
+  private ipcMainRemovePainEventData$ = this.ipcMainEvent$.pipe(
+    filter(({ arg }) => !!arg.requestPainRemove),
+    map(({ arg }) => arg.requestPainRemove as string)
+  );
+
   constructor(electronWindow: Electron.BrowserWindow) {
     this.electronWindow = electronWindow;
 
@@ -45,6 +50,13 @@ export class ShellManageService {
     this.subscription.add(
       this.ipcMainCreatePainEventData$.subscribe((data) => {
         this.createShell(data);
+      })
+    );
+
+    this.subscription.add(
+      this.ipcMainRemovePainEventData$.subscribe((id) => {
+        this.removeShell({ id });
+        console.log(`Remove pain: ${id}`, this.shellServices);
       })
     );
 

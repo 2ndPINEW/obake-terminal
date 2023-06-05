@@ -13,6 +13,7 @@ export interface Chunk {
     id: string;
     message: string;
   };
+  requestPainRemove?: string;
   /** ターミナルからペインのリサイズを伝えるイベント */
   resize?: {
     cols: number;

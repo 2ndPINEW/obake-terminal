@@ -1,4 +1,5 @@
-import { Injectable } from '@angular/core';
+/* eslint-disable @typescript-eslint/member-ordering */
+import { HostListener, Injectable } from '@angular/core';
 import {
   BehaviorSubject,
   Subject,
@@ -9,7 +10,10 @@ import {
   tap,
 } from 'rxjs';
 import { ElectronService } from './electron/electron.service';
-import { WORKSPACE_MANAGER_CHANNEL } from '../../../app/shared/constants/channel';
+import {
+  SHELL_MANAGER_CHANNEL,
+  WORKSPACE_MANAGER_CHANNEL,
+} from '../../../app/shared/constants/channel';
 import { WorkspaceManagerInfo } from '../../../app/shared/workspace';
 import { RequestWorkspaceAdd } from '../../../app/shared/chunk';
 
@@ -125,5 +129,27 @@ export class WorkspaceService {
 
   workspacePains(workspaceId: string) {
     return this.pains.filter((p) => p.workspaceId === workspaceId);
+  }
+
+  pain(id: string): Pain | undefined {
+    return this.pains.find((p) => p.id === id);
+  }
+
+  destroyAllPain() {
+    this.pains.forEach((p) => {
+      this.destroyPain(p.id);
+    });
+  }
+
+  destroyPain(id: string) {
+    const index = this.pains.findIndex((p) => p.id === id);
+    if (index === -1) {
+      return;
+    }
+    const pain = this.pains[index];
+    this.electronService.send(SHELL_MANAGER_CHANNEL, {
+      requestPainRemove: pain.id,
+    });
+    this.pains.splice(index, 1);
   }
 }
