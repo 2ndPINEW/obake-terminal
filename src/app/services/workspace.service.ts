@@ -33,7 +33,7 @@ export class WorkspaceService {
 
   constructor(private readonly electronService: ElectronService) {
     this.requestUpdateWorkspaceManagerInfoSubject$
-      .pipe(debounceTime(200))
+      .pipe(debounceTime(50))
       .subscribe(() => {
         this.requestUpdateWorkspaceManagerInfo();
       });
