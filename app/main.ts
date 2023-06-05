@@ -12,6 +12,10 @@ let window: BrowserWindow | null = null;
 const args = process.argv.slice(1),
   serve = args.some((val) => val === '--serve');
 
+let workspaceManageServiceInstance: WorkspaceManageService | null = null;
+let shellManageServiceInstance: ShellManageService | null = null;
+let settingManageServiceInstance: SettingManageService | null = null;
+
 const server = new ApiService();
 
 function createWindow(): BrowserWindow {
@@ -47,9 +51,9 @@ function createWindow(): BrowserWindow {
     },
   });
 
-  new ShellManageService(window);
-  new SettingManageService(window);
-  const workspaceManageServiceInstance = new WorkspaceManageService(window);
+  shellManageServiceInstance = new ShellManageService(window);
+  settingManageServiceInstance = new SettingManageService(window);
+  workspaceManageServiceInstance = new WorkspaceManageService(window);
   server.updateWorkspaceManageService(workspaceManageServiceInstance);
 
   if (serve) {
@@ -112,11 +116,14 @@ app.on('ready', () => setTimeout(createWindow, 400));
 
 // Quit when all windows are closed.
 app.on('window-all-closed', () => {
-  // On OS X it is common for applications and their menu bar
-  // to stay active until the user quits explicitly with Cmd + Q
-  if (process.platform !== 'darwin') {
-    app.quit();
-  }
+  shellManageServiceInstance?.beforeDestroy();
+  shellManageServiceInstance?.beforeDestroy();
+  settingManageServiceInstance?.beforeDestroy();
+  workspaceManageServiceInstance?.beforeDestroy();
+  server.beforeQuit();
+
+  // MEMO: 本来は Mac OS ではQuitしないけど、状態がわからんから消しちゃう
+  app.quit();
 });
 
 app.on('activate', () => {

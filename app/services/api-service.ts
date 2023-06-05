@@ -37,6 +37,10 @@ export class ApiService {
     }
   };
 
+  beforeQuit() {
+    this.server.close();
+  }
+
   updateWorkspaceManageService(workspaceManageService: WorkspaceManageService) {
     this.workspaceManageServiceInstance = workspaceManageService;
   }
