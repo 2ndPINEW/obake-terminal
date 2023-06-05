@@ -136,6 +136,7 @@ export const listWorkspace = (): Workspace[] => {
       status: 'INACTIVE',
       color: `#${Math.floor(Math.random() * 16777215).toString(16)}`,
       id: workspaceSetting.path,
+      codeWorkspacePath: workspaceSetting.path,
     };
   });
 };

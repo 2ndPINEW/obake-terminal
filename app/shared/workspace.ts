@@ -13,4 +13,5 @@ export interface Workspace {
   status: WorkspaceStatus;
   color: `#${string}`;
   id: string;
+  codeWorkspacePath: string;
 }
