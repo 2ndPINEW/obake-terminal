@@ -44,7 +44,7 @@ const DefaultValue: {
     isDarkMode: true,
     apiPort: 9435,
     repositoryBasePath: '~/dev',
-    workspaceConfigBasePath: '~/.workspaces',
+    workspaceConfigBasePath: '~/obake-workspaces',
     fontFamily: 'sans-serif',
   },
 };
