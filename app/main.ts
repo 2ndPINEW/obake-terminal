@@ -44,7 +44,7 @@ function createWindow(): BrowserWindow {
     height: 720,
     fullscreen: isFullScreen,
     fullscreenable: true,
-    titleBarStyle: 'hidden',
+    // titleBarStyle: 'hidden',
     webPreferences: {
       nodeIntegration: true,
       allowRunningInsecureContent: serve,
@@ -118,24 +118,6 @@ app.on('ready', () => {
   // Reloadを防ぐ
   globalShortcut.register('CommandOrControl+R', () => {});
   globalShortcut.register('CommandOrControl+Shift+R', () => {});
-
-  const template = [
-    {
-      label: 'Application',
-      submenu: [
-        {
-          label: 'Exit',
-          accelerator: 'CmdOrCtrl+Q',
-          click: () => {
-            app.quit();
-          },
-        },
-      ],
-    },
-  ];
-
-  const menu = Menu.buildFromTemplate(template);
-  Menu.setApplicationMenu(menu);
 });
 
 // Quit when all windows are closed.
