@@ -19,6 +19,7 @@ import {
   listWorkspace,
 } from '../utils/workspace';
 import { Logger } from '../utils/logger';
+import { isNotNullOrUndefined } from '../../src/app/utils/null-guard';
 
 export class WorkspaceManageService {
   private electronWindow: BrowserWindow;
@@ -43,18 +44,18 @@ export class WorkspaceManageService {
   );
 
   private ipcMainWorkspaceManagerModeChanged$ = this.ipcMainEvent$.pipe(
-    filter(({ arg }) => !!arg.workspaceManagerModeChanged),
-    map(({ arg }) => arg.workspaceManagerModeChanged as WorkspaceManagerMode)
+    map(({ arg }) => arg.workspaceManagerModeChanged),
+    isNotNullOrUndefined()
   );
 
   private ipcMainWorkspaceSwitchRequest$ = this.ipcMainEvent$.pipe(
-    filter(({ arg }) => !!arg.requestWorkspaceSwitch),
-    map(({ arg }) => arg.requestWorkspaceSwitch as string)
+    map(({ arg }) => arg.requestWorkspaceSwitch),
+    isNotNullOrUndefined()
   );
 
   private ipcMainWorkspaceAddRequest$ = this.ipcMainEvent$.pipe(
-    filter(({ arg }) => !!arg.requestWorkspaceAdd),
-    map(({ arg }) => arg.requestWorkspaceAdd as RequestWorkspaceAdd)
+    map(({ arg }) => arg.requestWorkspaceAdd),
+    isNotNullOrUndefined()
   );
 
   constructor(electronWindow: BrowserWindow) {

@@ -16,6 +16,7 @@ import {
 } from '../../../app/shared/constants/channel';
 import { WorkspaceManagerInfo } from '../../../app/shared/workspace';
 import { RequestWorkspaceAdd } from '../../../app/shared/chunk';
+import { isNotNullOrUndefined } from '../utils/null-guard';
 
 export interface Pain {
   id: string;
@@ -52,8 +53,8 @@ export class WorkspaceService {
     this.requestUpdateWorkspaceManagerInfoSubject$.next();
 
     return this.electronService.on$(WORKSPACE_MANAGER_CHANNEL).pipe(
-      filter((data) => !!data.workspaceManagerInfo),
-      map((data) => data.workspaceManagerInfo as WorkspaceManagerInfo)
+      map((data) => data.workspaceManagerInfo),
+      isNotNullOrUndefined()
     );
   }
 

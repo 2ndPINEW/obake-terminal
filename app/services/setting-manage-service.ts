@@ -1,15 +1,11 @@
-import { Subject, Subscription, filter, map } from 'rxjs';
-import {
-  Chunk,
-  SettingWriteRequest,
-  chunkToString,
-  stringToChunk,
-} from '../shared/chunk';
+import { Subject, Subscription, map } from 'rxjs';
+import { Chunk, chunkToString, stringToChunk } from '../shared/chunk';
 import { BrowserWindow, IpcMainEvent, ipcMain } from 'electron';
 import { SETTING_MANAGER_CHANNEL } from '../shared/constants/channel';
-import { DataBlock, saveData } from '../utils/save-data';
+import { saveData } from '../utils/save-data';
 import { loadData } from '../utils/save-data';
 import { Logger } from '../utils/logger';
+import { isNotNullOrUndefined } from '../../src/app/utils/null-guard';
 
 export class SettingManageService {
   private electronWindow: BrowserWindow;
@@ -26,13 +22,13 @@ export class SettingManageService {
   );
 
   private ipcMainRequestSettingRead$ = this.ipcMainEvent$.pipe(
-    filter(({ arg }) => !!arg.requestSettingRead),
-    map(({ arg }) => arg.requestSettingRead as DataBlock['key'])
+    map(({ arg }) => arg.requestSettingRead),
+    isNotNullOrUndefined()
   );
 
   private ipcMainRequestSettingWrite$ = this.ipcMainEvent$.pipe(
-    filter(({ arg }) => !!arg.requestSettingWrite),
-    map(({ arg }) => arg.requestSettingWrite as SettingWriteRequest)
+    map(({ arg }) => arg.requestSettingWrite),
+    isNotNullOrUndefined()
   );
 
   constructor(electronWindow: BrowserWindow) {

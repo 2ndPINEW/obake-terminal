@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { BehaviorSubject, from, map, of } from 'rxjs';
+import { BehaviorSubject, Observable, from, map, of } from 'rxjs';
 import { SettingService } from './setting.service';
 
 interface FontData {
@@ -56,14 +56,14 @@ export class LocalFontService {
       });
   }
 
-  queryLocalFonts$() {
+  queryLocalFonts$(): Observable<FontData[]> {
     if (window.queryLocalFonts) {
       return from(window.queryLocalFonts());
     }
     if (navigator.fonts?.query) {
       return from(navigator.fonts.query());
     }
-    return of([] as FontData[]);
+    return of([]);
   }
 
   // めちゃなうい記事発見

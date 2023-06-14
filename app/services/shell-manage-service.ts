@@ -10,6 +10,7 @@ import { SHELL_MANAGER_CHANNEL } from '../shared/constants/channel';
 import { ShellService } from './shell-service';
 import { IpcMainEvent, ipcMain } from 'electron';
 import { Logger } from '../utils/logger';
+import { isNotNullOrUndefined } from '../../src/app/utils/null-guard';
 
 export class ShellManageService {
   shellServices: ShellService[] = [];
@@ -31,13 +32,13 @@ export class ShellManageService {
   );
 
   private ipcMainCreatePainEventData$ = this.ipcMainEvent$.pipe(
-    filter(({ arg }) => !!arg.createPain),
-    map(({ arg }) => arg.createPain as CreatePainChunk)
+    map(({ arg }) => arg.createPain),
+    isNotNullOrUndefined()
   );
 
   private ipcMainRemovePainEventData$ = this.ipcMainEvent$.pipe(
-    filter(({ arg }) => !!arg.requestPainRemove),
-    map(({ arg }) => arg.requestPainRemove as string)
+    map(({ arg }) => arg.requestPainRemove),
+    isNotNullOrUndefined()
   );
 
   constructor(electronWindow: Electron.BrowserWindow) {
