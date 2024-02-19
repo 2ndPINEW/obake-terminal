@@ -78,10 +78,6 @@ function createWindow(): BrowserWindow {
 
     const url = new URL(path.join('file:', __dirname, pathIndex));
     window.loadURL(url.href);
-
-    const template = [{ label: 'Obake Terminal', submenu: [] }];
-    const menu = Menu.buildFromTemplate(template);
-    Menu.setApplicationMenu(menu);
   }
 
   window.on('close', () => {
