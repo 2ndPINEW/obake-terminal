@@ -9,10 +9,11 @@
   "main": "main.js",
   "private": true,
   "dependencies": {
+    "@fastify/cors": "^9.0.1",
+    "fastify": "4.17.0",
     "node-pty": "^0.10.1",
     "rxjs": "7.8.1",
-    "winston": "3.9.0",
-    "fastify": "4.17.0",
-    "simple-git": "3.19.0"
+    "simple-git": "3.19.0",
+    "winston": "3.9.0"
   }
 }

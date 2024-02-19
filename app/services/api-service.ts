@@ -2,6 +2,7 @@ import { Logger } from '../utils/logger';
 import { loadData } from '../utils/save-data';
 import { WorkspaceManageService } from './workspace-manage-service';
 import Fastify, { FastifyInstance } from 'fastify';
+import cors from '@fastify/cors'
 
 export class ApiService {
   workspaceManageServiceInstance: WorkspaceManageService | null = null;
@@ -25,6 +26,7 @@ export class ApiService {
 
   private start = async () => {
     try {
+      await this.server.register(cors)
       await this.server.listen({ port: this.port });
 
       const address = this.server.server.address();
