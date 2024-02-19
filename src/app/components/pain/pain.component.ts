@@ -18,6 +18,7 @@ import { ElectronService } from '../../services/electron/electron.service';
 import { SHELL_MANAGER_CHANNEL } from '../../../../app/shared/constants/channel';
 import { Subscription } from 'rxjs';
 import { Pain, WorkspaceService } from '../../services/workspace.service';
+import { clipboard } from 'electron'
 
 @Component({
   selector: 'app-pain',
@@ -119,6 +120,12 @@ export class PainComponent implements OnDestroy {
       }
       if (domEvent.key === 'ArrowRight' && domEvent.shiftKey) {
         this.workspaceService.activePainIndex$.next(this.index + 1);
+        return;
+      }
+      // CMD + V でペースト
+      if (domEvent.key === 'v' && domEvent.metaKey) {
+        const text = clipboard.readText()
+        this.input(text);
         return;
       }
 
