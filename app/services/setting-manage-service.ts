@@ -5,7 +5,7 @@ import { SETTING_MANAGER_CHANNEL } from '../shared/constants/channel';
 import { saveData } from '../utils/save-data';
 import { loadData } from '../utils/save-data';
 import { Logger } from '../utils/logger';
-import { isNotNullOrUndefined } from '../../src/app/utils/null-guard';
+import { isNotNullOrUndefined } from '../utils/null-guard';
 
 export class SettingManageService {
   private electronWindow: BrowserWindow;

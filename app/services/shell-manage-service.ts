@@ -1,4 +1,4 @@
-import { Subject, Subscription, filter, map, tap } from 'rxjs';
+import { Observable, Subject, Subscription, filter, map, tap } from 'rxjs';
 import { app } from 'electron';
 import {
   Chunk,
@@ -10,7 +10,7 @@ import { SHELL_MANAGER_CHANNEL } from '../shared/constants/channel';
 import { ShellService } from './shell-service';
 import { IpcMainEvent, ipcMain } from 'electron';
 import { Logger } from '../utils/logger';
-import { isNotNullOrUndefined } from '../../src/app/utils/null-guard';
+import { isNotNullOrUndefined } from '../utils/null-guard';
 
 export class ShellManageService {
   shellServices: ShellService[] = [];

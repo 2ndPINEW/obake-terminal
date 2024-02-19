@@ -19,7 +19,7 @@ import {
   listWorkspace,
 } from '../utils/workspace';
 import { Logger } from '../utils/logger';
-import { isNotNullOrUndefined } from '../../src/app/utils/null-guard';
+import { isNotNullOrUndefined } from '../utils/null-guard';
 
 export class WorkspaceManageService {
   private electronWindow: BrowserWindow;

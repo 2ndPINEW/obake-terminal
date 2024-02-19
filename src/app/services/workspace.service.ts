@@ -14,7 +14,6 @@ import {
   SHELL_MANAGER_CHANNEL,
   WORKSPACE_MANAGER_CHANNEL,
 } from '../../../app/shared/constants/channel';
-import { WorkspaceManagerInfo } from '../../../app/shared/workspace';
 import { RequestWorkspaceAdd } from '../../../app/shared/chunk';
 import { isNotNullOrUndefined } from '../utils/null-guard';
 
