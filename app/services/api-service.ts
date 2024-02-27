@@ -3,13 +3,14 @@ import { loadData } from '../utils/save-data';
 import { WorkspaceManageService } from './workspace-manage-service';
 import Fastify, { FastifyInstance } from 'fastify';
 import cors from '@fastify/cors'
+import { app } from 'electron';
 
 export class ApiService {
   workspaceManageServiceInstance: WorkspaceManageService | null = null;
 
   private server: FastifyInstance = Fastify({});
 
-  private port = loadData('configData.app-config').apiPort;
+  private port = app.isPackaged ? loadData('configData.app-config').apiPort : 9431;
 
   constructor() {
     this.server.get('/workspaces', async (request, reply) => {
